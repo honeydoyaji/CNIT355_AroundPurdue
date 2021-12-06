@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     static int place;
     static ArrayList<Location> locations = new ArrayList<Location>();
+    static ArrayList<Location> locations2 = new ArrayList<Location>();
     static ArrayList<String> names = new ArrayList<String>();
     static ArrayList<Double> lats = new ArrayList<Double>();
     static ArrayList<Double> lons = new ArrayList<Double>();
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         Location.A.lat = 40.424702;
         Location.A.lon = -86.910278;
         Location.A.image = R.drawable.purdue_student_union;
-        locations.add(Location.A);
+        //locations.add(Location.A);
 
         Location.B.name = "Purdue Convocations";
         Location.B.filter ="Purdue";
@@ -519,98 +520,102 @@ public class MainActivity extends AppCompatActivity {
 
 
         for (int i = 0; i < locations.size(); i++) {
-            names.add(locations.get(i).name);
-            images.add(locations.get(i).image);
-            lats.add(locations.get(i).lat);
-            lons.add(locations.get(i).lon);
+
+            if(String.valueOf(locations.get(i).filter).equals("Purdue")) {
+                names.add(locations.get(i).name);
+                images.add(locations.get(i).image);
+                lats.add(locations.get(i).lat);
+                lons.add(locations.get(i).lon);
+                locations2.add(locations.get(i));
+            }
         }
+
+
 
         TableLayout tl = (TableLayout) findViewById(R.id.tableLayout1);
 
-        for(int i = 0; i < names.size(); i = i + 2)
-        {
-            int j = i + 1;
-            TableRow tr = new TableRow(this);
-            TextView textview2 = new TextView(this);
-            TextView textview3 = new TextView(this);
-            RelativeLayout ll = new RelativeLayout(this);
-            RelativeLayout ll2 = new RelativeLayout(this);
-            ImageView iv = new ImageView(this);
-            ImageView iv2 = new ImageView(this);
+        for(int i = 0; i < names.size(); i = i + 2) {
+                int j = i + 1;
+                TableRow tr = new TableRow(this);
+                TextView textview2 = new TextView(this);
+                TextView textview3 = new TextView(this);
+                RelativeLayout ll = new RelativeLayout(this);
+                RelativeLayout ll2 = new RelativeLayout(this);
+                ImageView iv = new ImageView(this);
+                ImageView iv2 = new ImageView(this);
 
-            int paddingDp = 5;
-            float density = getResources().getDisplayMetrics().density;
-            int paddingPixel = (int)(paddingDp * density);
+                int paddingDp = 5;
+                float density = getResources().getDisplayMetrics().density;
+                int paddingPixel = (int) (paddingDp * density);
 
-            tr.setGravity(CENTER);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(paddingPixel * 39, paddingPixel * 7, 1);
-            LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(paddingPixel * 39, paddingPixel * 50);
-
-
-            ll.setLayoutParams(lp);
-            ll2.setLayoutParams(lp);
+                tr.setGravity(CENTER);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(paddingPixel * 39, paddingPixel * 7, 1);
+                LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(paddingPixel * 39, paddingPixel * 50);
 
 
-            lp.setMargins(paddingPixel, paddingPixel, paddingPixel, 0);
-            lp2.setMargins(paddingPixel, 0, paddingPixel, 0);
-            tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-
-            textview2.setText(names.get(i));
-            textview2.setTextColor(getResources().getColor(R.color.black));
-            textview2.setBackgroundResource(R.color.purdue);
-            textview2.setGravity(CENTER);
-
-            textview3.setText(names.get(j));
-            textview3.setTextColor(getResources().getColor(R.color.black));
-            textview3.setBackgroundResource(R.color.purdue);
-            textview3.setGravity(CENTER);
-
-            iv.setImageResource(images.get(i));
-            iv2.setImageResource(images.get(j));
+                ll.setLayoutParams(lp);
+                ll2.setLayoutParams(lp);
 
 
-            textview2.setLayoutParams(lp);
-            textview3.setLayoutParams(lp);
-            iv.setLayoutParams(lp2);
-            iv2.setLayoutParams(lp2);
-            ll.addView(textview2);
-            ll.addView(iv);
-            ll2.addView(textview3);
-            ll2.addView(iv2);
+                lp.setMargins(paddingPixel, paddingPixel, paddingPixel, 0);
+                lp2.setMargins(paddingPixel, 0, paddingPixel, 0);
+                tr.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
 
-            tr.addView(ll, new TableRow.LayoutParams(0));
-            tr.addView(ll2, new TableRow.LayoutParams(0));
-            tl.addView(tr, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+                textview2.setText(names.get(i));
+                textview2.setTextColor(getResources().getColor(R.color.black));
+                textview2.setBackgroundResource(R.color.purdue);
+                textview2.setGravity(CENTER);
 
-            int I = i;
-            iv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    place = I;
-                    Intent intent = new Intent(MainActivity.this, GuideActivity.class);
-                    startActivity(intent);
-                }
-            });
-            iv2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    place = j;
-                    Intent intent = new Intent(MainActivity.this, GuideActivity.class);
-                    startActivity(intent);
-                }
-            });
+                textview3.setText(names.get(j));
+                textview3.setTextColor(getResources().getColor(R.color.black));
+                textview3.setBackgroundResource(R.color.purdue);
+                textview3.setGravity(CENTER);
 
-            ImageButton imageButton = (ImageButton)findViewById(R.id.imageButton);
+                iv.setImageResource(images.get(i));
+                iv2.setImageResource(images.get(j));
 
-            imageButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                    startActivity(intent);
-                }
-            });
-        }
 
+                textview2.setLayoutParams(lp);
+                textview3.setLayoutParams(lp);
+                iv.setLayoutParams(lp2);
+                iv2.setLayoutParams(lp2);
+                ll.addView(textview2);
+                ll.addView(iv);
+                ll2.addView(textview3);
+                ll2.addView(iv2);
+
+                tr.addView(ll, new TableRow.LayoutParams(0));
+                tr.addView(ll2, new TableRow.LayoutParams(0));
+                tl.addView(tr, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+
+                int I = i;
+                iv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        place = I;
+                        Intent intent = new Intent(MainActivity.this, GuideActivity.class);
+                        startActivity(intent);
+                    }
+                });
+                iv2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        place = j;
+                        Intent intent = new Intent(MainActivity.this, GuideActivity.class);
+                        startActivity(intent);
+                    }
+                });
+
+                ImageButton imageButton = (ImageButton) findViewById(R.id.imageButton);
+
+                imageButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
 
     }
 
